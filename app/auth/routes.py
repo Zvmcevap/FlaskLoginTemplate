@@ -90,7 +90,6 @@ def signup_post():
     return render_template('signup.html', register_form=register_form)
 
 
-
 @auth_bp.route('/logout')
 @login_required
 def logout():
