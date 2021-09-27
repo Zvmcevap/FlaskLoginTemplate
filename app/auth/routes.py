@@ -30,12 +30,15 @@ def login_post():
 
         # When a valid form is submitted check the data against the database
         user = User.query.filter((User.name == name_email) | (User.email == name_email)).first()
+        print(password)
+        print(user.password)
 
         if not user:
+            print("no user")
             flash('Incorrect login information', 'invalid_login_details')
             return redirect(url_for('auth_bp.login', login_form=login_form))
 
-        if check_password_hash(user.password, password):
+        if not check_password_hash(user.password, password):
             flash('Incorrect login information', 'invalid_login_details')
             return redirect(url_for('auth_bp.login', login_form=login_form))
 
@@ -59,7 +62,7 @@ def signup_post():
 
     email = register_form.email.data
     name = register_form.name.data
-    password = register_form.name.data
+    password = register_form.password.data
     remember = register_form.remember.data
 
     if register_form.validate_on_submit():
