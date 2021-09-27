@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from app import db
@@ -35,7 +35,7 @@ def login_post():
             flash('Incorrect login information', 'invalid_login_details')
             return redirect(url_for('auth_bp.login', login_form=login_form))
 
-        if not check_password_hash(user.password, password):
+        if check_password_hash(user.password, password):
             flash('Incorrect login information', 'invalid_login_details')
             return redirect(url_for('auth_bp.login', login_form=login_form))
 
